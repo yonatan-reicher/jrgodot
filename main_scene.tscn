@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://c6jkds74fn2mm"]
+
+[ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://player.tscn" id="1_gyfs4"]
+[ext_resource type="PackedScene" uid="uid://d0lryi26yd36c" path="res://ship.tscn" id="2_2c62f"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2c62f"]
+sky_top_color = Color(0.30007476, 0.5057224, 0.5718656, 1)
+sky_horizon_color = Color(0.68859065, 0.74741566, 0.76542306, 1)
+ground_bottom_color = Color(0.18908, 0.21873215, 0.22461879, 1)
+ground_horizon_color = Color(0.68859065, 0.74741566, 0.76542306, 1)
+
+[sub_resource type="Sky" id="Sky_gyfs4"]
+sky_material = SubResource("ProceduralSkyMaterial_2c62f")
+
+[sub_resource type="Environment" id="Environment_d5x1h"]
+background_mode = 2
+sky = SubResource("Sky_gyfs4")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_3k1vp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3k1vp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3k1vp"]
+
+[node name="Node3D" type="Node3D" unique_id=1949701785]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=196579521]
+environment = SubResource("Environment_d5x1h")
+
+[node name="DebugLabel" type="Label" parent="." unique_id=1022556110]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Player" parent="." unique_id=160095304 instance=ExtResource("1_gyfs4")]
+
+[node name="Ship" parent="." unique_id=1660485224 instance=ExtResource("2_2c62f")]
+transform = Transform3D(0.8365996, 0, -0.54781485, 0, 1, 0, 0.54781485, 0, 0.8365996, 3.0285726, 0, -3.3760376)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1539824595]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1930084589]
+shape = SubResource("WorldBoundaryShape3D_3k1vp")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1344040991]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8869164, 0, -2.9416983)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=1360938058]
+mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=193414721]
+shape = SubResource("BoxShape3D_3k1vp")
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="." unique_id=1827612121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8869164, 13.258852, -28.35614)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2" unique_id=2068039386]
+mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2" unique_id=1699743359]
+shape = SubResource("BoxShape3D_3k1vp")
+
+[node name="RigidBody3D3" type="RigidBody3D" parent="." unique_id=2116194291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.600511, 13.258852, 28.41428)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D3" unique_id=1583596035]
+mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D3" unique_id=403131096]
+shape = SubResource("BoxShape3D_3k1vp")
+
+[node name="RigidBody3D4" type="RigidBody3D" parent="." unique_id=1496291192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.757904, 15.206326, -17.62067)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D4" unique_id=611100966]
+mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D4" unique_id=1419561944]
+shape = SubResource("BoxShape3D_3k1vp")
+
+[node name="RigidBody3D5" type="RigidBody3D" parent="." unique_id=620906603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.246536, 14.205767, -2.3832932)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D5" unique_id=2080919259]
+mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D5" unique_id=811279036]
+shape = SubResource("BoxShape3D_3k1vp")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1421170773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1596706, 0, -0.6679797)

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://ckudr8chj1kgo"]
+
+[ext_resource type="Script" uid="uid://bkhh17u3mnb5t" path="res://Player.cs" id="1_onrkg"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_onrkg"]
+friction = 0.21
+bounce = 0.1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3k1vp"]
+radius = 0.2290039
+height = 1.0065918
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3k1vp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3k1vp"]
+radius = 0.2319336
+height = 1.0
+
+[node name="Player" type="RigidBody3D" unique_id=1031226533 node_paths=PackedStringArray("camera")]
+physics_material_override = SubResource("PhysicsMaterial_onrkg")
+angular_damp = 10.0
+script = ExtResource("1_onrkg")
+camera = NodePath("Camera3D")
+mouseSensitivity = 0.002
+movementSpeed = 7.015
+
+[node name="Graphics" type="MeshInstance3D" parent="." unique_id=1916816855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5032959, 0)
+mesh = SubResource("CapsuleMesh_3k1vp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Graphics" unique_id=1467393183]
+transform = Transform3D(0.10673326, 0, 0, 0, -4.371139e-08, 0.10673326, 0, -1, -4.665459e-09, 0, 0.25284493, -0.23220412)
+mesh = SubResource("PlaneMesh_3k1vp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1812665081]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_3k1vp")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1695123447]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+current = true

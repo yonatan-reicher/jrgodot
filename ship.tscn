@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://d0lryi26yd36c"]
+
+[ext_resource type="Script" uid="uid://bclqwo7chxhp8" path="res://Ship.cs" id="1_4cq66"]
+[ext_resource type="Script" uid="uid://gc1umsny7mul" path="res://FlightStick.cs" id="2_c3vuw"]
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="2_v4325"]
+[ext_resource type="Script" uid="uid://bidf7dqk4pnwf" path="res://AccelerationStick.cs" id="4_78o8j"]
+[ext_resource type="Script" uid="uid://bnw675enco5j8" path="res://InteractableArea.cs" id="4_c3vuw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_76hi5"]
+size = Vector3(0.2, 0.2, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tvy6i"]
+size = Vector3(0.045, 0.17047119, 0.045)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xpsff"]
+size = Vector3(1, 0.013244629, 0.89627075)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_78o8j"]
+size = Vector3(1, 2.9867554, 0.10598145)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tvy6i"]
+size = Vector3(0.8, 1.0083618, 0.05517578)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3k1vp"]
+size = Vector3(1.4, 0.2, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c3vuw"]
+size = Vector3(0.2, 0.6, 3)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3k1vp"]
+radius = 0.7
+height = 3.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_3k1vp"]
+size = Vector3(0.5, 3.011, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_76hi5"]
+size = Vector3(1.2, 0.7, 1.26875)
+
+[node name="Ship" type="RigidBody3D" unique_id=1660485224 node_paths=PackedStringArray("sit", "flightStick", "accelerationStick")]
+mass = 500.0
+script = ExtResource("1_4cq66")
+sit = NodePath("Cockpit/Sit")
+flightStick = NodePath("Cockpit/FlightStickBase/FlightStick")
+flightStickMouseSensitivity = 0.132
+flightStickRollStrength = 1.721
+accelerationStick = NodePath("Cockpit/AccelarationStick")
+
+[node name="Cockpit" type="Node3D" parent="." unique_id=1064663484]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -1.5)
+
+[node name="FlightStickBase" type="Node3D" parent="Cockpit" unique_id=1968621236]
+transform = Transform3D(0.39, 0, 0, 0, 0.35374704, 0.1642039, 0, -0.1642039, 0.35374704, 0, 0.13015759, 0.071039915)
+
+[node name="FlightStick" type="Node3D" parent="Cockpit/FlightStickBase" unique_id=2012310368 node_paths=PackedStringArray("head")]
+script = ExtResource("2_c3vuw")
+head = NodePath("FlightStickEnd/FlightStickHead")
+rollMaxAngle = 0.542
+pitchAndYawMaxAngle = 1.065
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cockpit/FlightStickBase/FlightStick" unique_id=869173288]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 0.9999999, 1.9104053e-08, 0, 0.24999976)
+mesh = SubResource("BoxMesh_76hi5")
+
+[node name="FlightStickEnd" type="Node3D" parent="Cockpit/FlightStickBase/FlightStick" unique_id=283264661]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0.0050833225, 0.5230124)
+
+[node name="FlightStickHead" type="Sprite3D" parent="Cockpit/FlightStickBase/FlightStick/FlightStickEnd" unique_id=119910870]
+transform = Transform3D(0.495, 0, 0, 0, 0.495, 0, 0, 0, 0.495, 0, 0, 0)
+texture = ExtResource("2_v4325")
+region_enabled = true
+region_rect = Rect2(16.882187, 20.382017, 94.23448, 89.5694)
+
+[node name="AccelarationStick" type="Node3D" parent="Cockpit" unique_id=173738540]
+transform = Transform3D(-1, -3.998207e-08, -7.7744296e-08, -8.1627604e-08, 0.7454157, 0.66659987, 3.1299777e-08, 0.66659987, -0.7454157, 0.2531853, -0.027595878, 0.15283573)
+script = ExtResource("4_78o8j")
+rotationMax = null
+springStrength = 50.0
+dampStrength = 0.872
+bobbiness = 0.349
+Target = null
+
+[node name="Pivot" type="Node3D" parent="Cockpit/AccelarationStick" unique_id=1728571907]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cockpit/AccelarationStick/Pivot" unique_id=1591365243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08706665, 0)
+mesh = SubResource("BoxMesh_tvy6i")
+
+[node name="Sit" type="Node3D" parent="Cockpit" unique_id=91655688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9604645e-08, -0.1110754, 0.74862194)
+
+[node name="RampCollision" type="CollisionShape3D" parent="." unique_id=1614163719]
+transform = Transform3D(1, 0, 0, 0, 0.9781476, -0.2079117, 0, 0.2079117, 0.9781476, 0, 0.10646179, 1.9293919)
+shape = SubResource("BoxShape3D_xpsff")
+
+[node name="RightWallCollision" type="CollisionShape3D" parent="." unique_id=2007311923]
+transform = Transform3D(-0.6081474, 6.128212e-08, -0.79382414, 0.79382414, -8.116189e-09, -0.6081474, -4.371139e-08, -1, -4.371139e-08, 0.43619114, 1.0340021, 0.5003357)
+shape = SubResource("BoxShape3D_78o8j")
+
+[node name="WindShieldCollision" type="CollisionShape3D" parent="." unique_id=224110232]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.8574902, -0.5145003, 0, 0.5145003, 0.85749006, 2.9802322e-08, 1.0345536, -1.2457018)
+shape = SubResource("BoxShape3D_tvy6i")
+
+[node name="LeftWallCollision" type="CollisionShape3D" parent="." unique_id=506827448]
+transform = Transform3D(0.6087614, 1.710158e-08, -0.7933533, 0.7933533, -3.4678575e-08, 0.6087614, -1.710158e-08, -1, -3.4678575e-08, -0.436, 1.034, 0.5)
+shape = SubResource("BoxShape3D_78o8j")
+
+[node name="FloorCollision" type="CollisionShape3D" parent="." unique_id=2041800663]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9604645e-08, 0.099999994, 0)
+shape = SubResource("BoxShape3D_3k1vp")
+
+[node name="LeftLandingGearCollision" type="CollisionShape3D" parent="." unique_id=378519849]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.60000014, 0.29999998, 0)
+shape = SubResource("BoxShape3D_c3vuw")
+
+[node name="RightLandingGearCollision" type="CollisionShape3D" parent="." unique_id=1419715547]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5999999, 0.29999998, 0)
+shape = SubResource("BoxShape3D_c3vuw")
+
+[node name="Graphics" type="Node3D" parent="." unique_id=1391101102]
+
+[node name="HullMesh" type="MeshInstance3D" parent="Graphics" unique_id=189988267]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.7, 0.5)
+mesh = SubResource("CapsuleMesh_3k1vp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Graphics" unique_id=45535062]
+transform = Transform3D(-1, 1.509958e-07, 0, 6.600236e-15, 4.371139e-08, 1, 1.509958e-07, 1, -4.371139e-08, -0.45000005, 0.3, -4.8082512e-08)
+mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Graphics" unique_id=162492441]
+transform = Transform3D(1, -1.7484552e-07, 0, -7.642741e-15, -4.371139e-08, 1, -1.7484552e-07, -1, -4.371139e-08, 0.45, 0.3, -2.1855692e-08)
+mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=119755230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.940697e-08, 0.6, -0.90000004)
+script = ExtResource("4_c3vuw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1231725424]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, -0.08559561, 0.16562504)
+shape = SubResource("BoxShape3D_76hi5")
+
+[connection signal="Interacted" from="Area3D" to="." method="EatPlayer" unbinds=1]
+[connection signal="Interacted" from="Area3D" to="." method="SetActiveTo" unbinds=2 binds= [true]]
