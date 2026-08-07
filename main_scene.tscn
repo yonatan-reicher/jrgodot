@@ -18,6 +18,13 @@ sky = SubResource("Sky_gyfs4")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_3k1vp"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tvy6i"]
+albedo_color = Color(0.13136059, 0.16557881, 0.08127805, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_76hi5"]
+material = SubResource("StandardMaterial3D_tvy6i")
+size = Vector2(2000, 2000)
+
 [sub_resource type="BoxMesh" id="BoxMesh_3k1vp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3k1vp"]
@@ -41,6 +48,9 @@ transform = Transform3D(0.8365996, 0, -0.54781485, 0, 1, 0, 0.54781485, 0, 0.836
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1930084589]
 shape = SubResource("WorldBoundaryShape3D_3k1vp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=893646498]
+mesh = SubResource("PlaneMesh_76hi5")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1344040991]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8869164, 0, -2.9416983)

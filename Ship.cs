@@ -1,5 +1,4 @@
 using Godot;
-// using System;
 
 public partial class Ship : RigidBody3D
 {
@@ -14,11 +13,21 @@ public partial class Ship : RigidBody3D
 	[Export(PropertyHint.Range, "0,200")] float rollStrength = 100f;
 	[ExportGroup("Acceleration Stick")]
 	[Export] AccelerationStick accelerationStick;
+	[ExportGroup("Ramp")]
+	[Export] HingeJoint3D rampHinge;
 
 	Label debugLabel;
 	Player pilot;
 
-	public bool Active { get; set; } = false;
+	bool _active;
+	public bool Active {
+		get => _active;
+		set {
+			_active = value;
+			if (_active) onActivate();
+			else onDeactivate();
+		}
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -54,10 +63,6 @@ public partial class Ship : RigidBody3D
 			ApplyCentralForce(GlobalBasis.Y.Normalized() * 10.5f * Mass);
 	}
 
-	public void SetActiveTo(bool a) {
-		Active = a;
-	}
-
 	public override void _PhysicsProcess(double delta) {
 		if (Active) {
 			// Move the pilot towards their sit
@@ -90,11 +95,28 @@ public partial class Ship : RigidBody3D
 		ApplyCentralForce(-g.Z * a.Acceleration * Mass * 2f);
 	}
 
-	public void EatPlayer(Node3D obj) {
-		if (obj is not Player p) return;
-		p.Active = false;
-		// p.GetParent().RemoveChild(p);
-		// sit.AddChild(p);
-		pilot = p;
+	void onActivate() {
+		rampHinge.SetFlag(HingeJoint3D.Flag.EnableMotor, true);
+	}
+
+	void onDeactivate() {
+		rampHinge.SetFlag(HingeJoint3D.Flag.EnableMotor, false);
+	}
+
+	void Interact(Node3D interactor) {
+		if (!Active) {
+			Active = true;
+			if (interactor is Player p) {
+				p.Active = false;
+				pilot = p;
+			} else {
+				pilot = null;
+			}
+		} else {
+			Active = false;
+			if (pilot is not null) {
+				pilot.Active = true;
+			}
+		}
 	}
 }

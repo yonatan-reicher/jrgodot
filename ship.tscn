@@ -15,6 +15,9 @@ size = Vector3(0.045, 0.17047119, 0.045)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xpsff"]
 size = Vector3(1, 0.013244629, 0.89627075)
 
+[sub_resource type="BoxMesh" id="BoxMesh_fmx3j"]
+size = Vector3(1, 0.015875, 1)
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_78o8j"]
 size = Vector3(1, 2.9867554, 0.10598145)
 
@@ -37,7 +40,7 @@ size = Vector3(0.5, 3.011, 0.6)
 [sub_resource type="BoxShape3D" id="BoxShape3D_76hi5"]
 size = Vector3(1.2, 0.7, 1.26875)
 
-[node name="Ship" type="RigidBody3D" unique_id=1660485224 node_paths=PackedStringArray("sit", "flightStick", "accelerationStick")]
+[node name="Ship" type="RigidBody3D" unique_id=1660485224 node_paths=PackedStringArray("sit", "flightStick", "accelerationStick", "rampHinge")]
 mass = 500.0
 script = ExtResource("1_4cq66")
 sit = NodePath("Cockpit/Sit")
@@ -45,6 +48,7 @@ flightStick = NodePath("Cockpit/FlightStickBase/FlightStick")
 flightStickMouseSensitivity = 0.132
 flightStickRollStrength = 1.721
 accelerationStick = NodePath("Cockpit/AccelarationStick")
+rampHinge = NodePath("HingeJoint3D")
 
 [node name="Cockpit" type="Node3D" parent="." unique_id=1064663484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -1.5)
@@ -74,11 +78,9 @@ region_rect = Rect2(16.882187, 20.382017, 94.23448, 89.5694)
 [node name="AccelarationStick" type="Node3D" parent="Cockpit" unique_id=173738540]
 transform = Transform3D(-1, -3.998207e-08, -7.7744296e-08, -8.1627604e-08, 0.7454157, 0.66659987, 3.1299777e-08, 0.66659987, -0.7454157, 0.2531853, -0.027595878, 0.15283573)
 script = ExtResource("4_78o8j")
-rotationMax = null
 springStrength = 50.0
 dampStrength = 0.872
 bobbiness = 0.349
-Target = null
 
 [node name="Pivot" type="Node3D" parent="Cockpit/AccelarationStick" unique_id=1728571907]
 
@@ -89,9 +91,23 @@ mesh = SubResource("BoxMesh_tvy6i")
 [node name="Sit" type="Node3D" parent="Cockpit" unique_id=91655688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9604645e-08, -0.1110754, 0.74862194)
 
-[node name="RampCollision" type="CollisionShape3D" parent="." unique_id=1614163719]
-transform = Transform3D(1, 0, 0, 0, 0.9781476, -0.2079117, 0, 0.2079117, 0.9781476, 0, 0.10646179, 1.9293919)
+[node name="HingeJoint3D" type="HingeJoint3D" parent="." unique_id=925106311]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.19426773, 1.5224696)
+node_a = NodePath("..")
+node_b = NodePath("../Ramp")
+angular_limit/enable = true
+angular_limit/lower = -0.27750736
+
+[node name="Ramp" type="RigidBody3D" parent="." unique_id=70242732]
+transform = Transform3D(1, 0, 0, 0, 0.99279994, -0.11978448, 0, 0.11978448, 0.99279994, 0.022122443, 0.13312948, 2.013337)
+
+[node name="Collision" type="CollisionShape3D" parent="Ramp" unique_id=1614163719]
+transform = Transform3D(1, 0, 0, 0, 1.0000002, -1.4901161e-08, 0, 1.4901161e-08, 1.0000002, 0, 0, 0)
 shape = SubResource("BoxShape3D_xpsff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ramp" unique_id=1765585801]
+transform = Transform3D(1, 0, 0, 0, 1.0000002, -2.9802322e-08, 0, 2.9802322e-08, 1.0000002, 0, -0.0023047328, 0)
+mesh = SubResource("BoxMesh_fmx3j")
 
 [node name="RightWallCollision" type="CollisionShape3D" parent="." unique_id=2007311923]
 transform = Transform3D(-0.6081474, 6.128212e-08, -0.79382414, 0.79382414, -8.116189e-09, -0.6081474, -4.371139e-08, -1, -4.371139e-08, 0.43619114, 1.0340021, 0.5003357)
@@ -139,5 +155,4 @@ script = ExtResource("4_c3vuw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.9604645e-08, -0.08559561, 0.16562504)
 shape = SubResource("BoxShape3D_76hi5")
 
-[connection signal="Interacted" from="Area3D" to="." method="EatPlayer" unbinds=1]
-[connection signal="Interacted" from="Area3D" to="." method="SetActiveTo" unbinds=2 binds= [true]]
+[connection signal="Interacted" from="Area3D" to="." method="Interact"]

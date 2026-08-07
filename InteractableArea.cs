@@ -3,7 +3,7 @@ using Godot;
 public partial class InteractableArea : Area3D
 {
 	[Signal]
-	public delegate void InteractedEventHandler(Node3D subject, InteractableArea interacted);
+	public delegate void InteractedEventHandler(Node3D interactor);
 
 	public override void _Ready() {
 		BodyEntered += body => {
@@ -16,7 +16,7 @@ public partial class InteractableArea : Area3D
 		};
 	}
 
-	public void Interact(Node3D subject) {
-		EmitSignalInteracted(subject, this);
+	public void Interact(Node3D interactor) {
+		EmitSignalInteracted(interactor);
 	}
 }
