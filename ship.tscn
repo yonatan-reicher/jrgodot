@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="2_v4325"]
 [ext_resource type="Script" uid="uid://bidf7dqk4pnwf" path="res://AccelerationStick.cs" id="4_78o8j"]
 [ext_resource type="Script" uid="uid://bnw675enco5j8" path="res://InteractableArea.cs" id="4_c3vuw"]
+[ext_resource type="PackedScene" uid="uid://cjoc7cnlaq35w" path="res://acceleration_ball.tscn" id="5_xpsff"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_76hi5"]
 size = Vector3(0.2, 0.2, 0.5)
@@ -41,7 +42,8 @@ size = Vector3(0.5, 3.011, 0.6)
 size = Vector3(1.2, 0.7, 1.26875)
 
 [node name="Ship" type="RigidBody3D" unique_id=1660485224 node_paths=PackedStringArray("sit", "flightStick", "accelerationStick", "rampHinge")]
-mass = 500.0
+mass = 2000.0
+inertia = Vector3(1000, 1000, 1000)
 script = ExtResource("1_4cq66")
 sit = NodePath("Cockpit/Sit")
 flightStick = NodePath("Cockpit/FlightStickBase/FlightStick")
@@ -49,6 +51,7 @@ flightStickMouseSensitivity = 0.132
 flightStickRollStrength = 1.721
 accelerationStick = NodePath("Cockpit/AccelarationStick")
 rampHinge = NodePath("HingeJoint3D")
+vtolForce = 21000.0
 
 [node name="Cockpit" type="Node3D" parent="." unique_id=1064663484]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -1.5)
@@ -91,12 +94,17 @@ mesh = SubResource("BoxMesh_tvy6i")
 [node name="Sit" type="Node3D" parent="Cockpit" unique_id=91655688]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9604645e-08, -0.1110754, 0.74862194)
 
+[node name="AccelerationBall" parent="Cockpit" unique_id=1718152569 instance=ExtResource("5_xpsff")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.41288346, 0.055668652, 0.35114014)
+
 [node name="HingeJoint3D" type="HingeJoint3D" parent="." unique_id=925106311]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.19426773, 1.5224696)
 node_a = NodePath("..")
 node_b = NodePath("../Ramp")
+exclude_nodes_from_collision = false
 angular_limit/enable = true
 angular_limit/lower = -0.27750736
+motor/max_impulse = 1001.99
 
 [node name="Ramp" type="RigidBody3D" parent="." unique_id=70242732]
 transform = Transform3D(1, 0, 0, 0, 0.99279994, -0.11978448, 0, 0.11978448, 0.99279994, 0.022122443, 0.13312948, 2.013337)

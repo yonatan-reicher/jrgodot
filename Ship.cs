@@ -15,9 +15,12 @@ public partial class Ship : RigidBody3D
 	[Export] AccelerationStick accelerationStick;
 	[ExportGroup("Ramp")]
 	[Export] HingeJoint3D rampHinge;
+	[ExportGroup("Thrusters")]
+	[Export(PropertyHint.Range, "0,100000")] float vtolForce = 12_000f;
 
 	Label debugLabel;
 	Player pilot;
+	bool thrustingVtol = false;
 
 	bool _active;
 	public bool Active {
@@ -59,8 +62,7 @@ public partial class Ship : RigidBody3D
 		} else {
 			accelerationStick.Target = 0;
 		}
-		if (Input.IsKeyPressed(Key.Space))
-			ApplyCentralForce(GlobalBasis.Y.Normalized() * 10.5f * Mass);
+		thrustingVtol = Input.IsKeyPressed(Key.Space);
 	}
 
 	public override void _PhysicsProcess(double delta) {
@@ -93,6 +95,10 @@ public partial class Ship : RigidBody3D
 		ApplyTorque(-g.X * f.Pitch * pitchAndYawStrength);
 		ApplyTorque(-g.Z * f.Roll * rollStrength);
 		ApplyCentralForce(-g.Z * a.Acceleration * Mass * 2f);
+		if (thrustingVtol) {
+			GD.Print(g.Y * vtolForce);
+			ApplyCentralForce(g.Y * vtolForce);
+		}
 	}
 
 	void onActivate() {

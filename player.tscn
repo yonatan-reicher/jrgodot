@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://bkhh17u3mnb5t" path="res://Player.cs" id="1_onrkg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_onrkg"]
-friction = 0.21
+friction = 0.05
+rough = true
 bounce = 0.1
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3k1vp"]
@@ -17,12 +18,14 @@ radius = 0.2319336
 height = 1.0
 
 [node name="Player" type="RigidBody3D" unique_id=1031226533 node_paths=PackedStringArray("camera")]
+mass = 65.0
 physics_material_override = SubResource("PhysicsMaterial_onrkg")
 angular_damp = 10.0
 script = ExtResource("1_onrkg")
 camera = NodePath("Camera3D")
 mouseSensitivity = 0.002
-movementSpeed = 7.015
+movementSpeed = 300.0
+standUpSpringStrength = 2500.0
 
 [node name="Graphics" type="MeshInstance3D" parent="." unique_id=1916816855]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5032959, 0)

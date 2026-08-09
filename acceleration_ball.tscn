@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cjoc7cnlaq35w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tvy6i"]
+transparency = 1
+albedo_color = Color(0.7209, 0.89, 0.78008497, 0.21568628)
+metallic = 0.05
+metallic_specular = 0.21
+roughness = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_3k1vp"]
+material = SubResource("StandardMaterial3D_tvy6i")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xpsff"]
+shading_mode = 2
+albedo_color = Color(0.61060005, 0.71036, 0.86, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_76hi5"]
+material = SubResource("StandardMaterial3D_xpsff")
+radial_segments = 16
+rings = 4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3k1vp"]
+
+[node name="AccelerationBall" type="Node3D" unique_id=1718152569]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="TheOrb" type="MeshInstance3D" parent="." unique_id=1126703790]
+mesh = SubResource("SphereMesh_3k1vp")
+
+[node name="Anchor" type="StaticBody3D" parent="." unique_id=1364351900]
+
+[node name="Pin" type="PinJoint3D" parent="." unique_id=1729075303]
+node_a = NodePath("../Anchor")
+node_b = NodePath("../TheBall")
+
+[node name="Rotator" type="RigidBody3D" parent="." unique_id=318762709]
+mass = 0.01
+
+[node name="Slider" type="SliderJoint3D" parent="." unique_id=1636250220]
+node_a = NodePath("../Rotator")
+node_b = NodePath("../TheBall")
+linear_limit/upper_distance = 0.35
+linear_limit/lower_distance = 0.0
+
+[node name="TheBall" type="RigidBody3D" parent="." unique_id=489866767]
+transform = Transform3D(0.20000002, 0, 0, 0, 0.20000002, 0, 0, 0, 0.20000002, -0.35204118, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TheBall" unique_id=756265795]
+mesh = SubResource("SphereMesh_76hi5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TheBall" unique_id=2050573398]
+shape = SubResource("SphereShape3D_3k1vp")
