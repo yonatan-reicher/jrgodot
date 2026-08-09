@@ -43,12 +43,14 @@ size = Vector3(1.2, 0.7, 1.26875)
 
 [node name="Ship" type="RigidBody3D" unique_id=1660485224 node_paths=PackedStringArray("sit", "flightStick", "accelerationStick", "rampHinge")]
 mass = 2000.0
-inertia = Vector3(1000, 1000, 1000)
+inertia = Vector3(10000, 10000, 10000)
 script = ExtResource("1_4cq66")
 sit = NodePath("Cockpit/Sit")
 flightStick = NodePath("Cockpit/FlightStickBase/FlightStick")
 flightStickMouseSensitivity = 0.132
-flightStickRollStrength = 1.721
+flightStickRollStrength = 2.0
+pitchAndYawStrength = 2000.0
+rollStrength = 200.0
 accelerationStick = NodePath("Cockpit/AccelarationStick")
 rampHinge = NodePath("HingeJoint3D")
 vtolForce = 21000.0
