@@ -31,12 +31,18 @@ size = Vector3(1.4, 0.2, 3)
 [sub_resource type="BoxShape3D" id="BoxShape3D_c3vuw"]
 size = Vector3(0.2, 0.6, 3)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_pb2vj"]
+size = Vector3(0.27333984, 0.6, 0.24627686)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3k1vp"]
 radius = 0.7
 height = 3.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_3k1vp"]
 size = Vector3(0.5, 3.011, 0.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xwd62"]
+size = Vector3(0.273, 0.6, 0.246)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_76hi5"]
 size = Vector3(1.2, 0.7, 1.26875)
@@ -49,8 +55,6 @@ sit = NodePath("Cockpit/Sit")
 flightStick = NodePath("Cockpit/FlightStickBase/FlightStick")
 flightStickMouseSensitivity = 0.132
 flightStickRollStrength = 2.0
-pitchAndYawStrength = 2000.0
-rollStrength = 200.0
 accelerationStick = NodePath("Cockpit/AccelarationStick")
 rampHinge = NodePath("HingeJoint3D")
 vtolForce = 21000.0
@@ -143,6 +147,10 @@ shape = SubResource("BoxShape3D_c3vuw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5999999, 0.29999998, 0)
 shape = SubResource("BoxShape3D_c3vuw")
 
+[node name="ChairCollision" type="CollisionShape3D" parent="." unique_id=14256335]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.563)
+shape = SubResource("BoxShape3D_pb2vj")
+
 [node name="Graphics" type="Node3D" parent="." unique_id=1391101102]
 
 [node name="HullMesh" type="MeshInstance3D" parent="Graphics" unique_id=189988267]
@@ -156,6 +164,10 @@ mesh = SubResource("BoxMesh_3k1vp")
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Graphics" unique_id=162492441]
 transform = Transform3D(1, -1.7484552e-07, 0, -7.642741e-15, -4.371139e-08, 1, -1.7484552e-07, -1, -4.371139e-08, 0.45, 0.3, -2.1855692e-08)
 mesh = SubResource("BoxMesh_3k1vp")
+
+[node name="ChairMesh" type="MeshInstance3D" parent="Graphics" unique_id=791682211]
+transform = Transform3D(1, -1.7484552e-07, 0, -1.7484552e-07, -1, -8.742278e-08, 1.5285482e-14, 8.742278e-08, -1, 0, 0.6, -0.563)
+mesh = SubResource("BoxMesh_xwd62")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=119755230]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.940697e-08, 0.6, -0.90000004)

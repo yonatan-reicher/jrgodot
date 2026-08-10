@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c6jkds74fn2mm"]
 
+[ext_resource type="Script" uid="uid://n47i60ipsyli" path="res://MouseManager.cs" id="1_d5x1h"]
 [ext_resource type="PackedScene" uid="uid://ckudr8chj1kgo" path="res://player.tscn" id="1_gyfs4"]
 [ext_resource type="PackedScene" uid="uid://d0lryi26yd36c" path="res://ship.tscn" id="2_2c62f"]
 
@@ -31,6 +32,9 @@ size = Vector2(2000, 2000)
 
 [node name="Node3D" type="Node3D" unique_id=1949701785]
 
+[node name="MouseManager" type="Node" parent="." unique_id=309722690]
+script = ExtResource("1_d5x1h")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=196579521]
 environment = SubResource("Environment_d5x1h")
 
@@ -40,6 +44,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="Player" parent="." unique_id=160095304 instance=ExtResource("1_gyfs4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4722874, 0.331836, -4.14573)
 
 [node name="Ship" parent="." unique_id=1660485224 instance=ExtResource("2_2c62f")]
 transform = Transform3D(0.8365996, 0, -0.54781485, 0, 1, 0, 0.54781485, 0, 0.8365996, 3.0285726, 0, -3.3760376)

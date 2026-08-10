@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class Player : RigidBody3D
+public partial class Player : RigidBody3D, Controllable
 {
 	[ExportGroup("Camera")]
 	[Export] Node3D camera;
@@ -18,7 +18,7 @@ public partial class Player : RigidBody3D
 	Label debugLabel;
 	List<InteractableArea> interactables = new();
 
-	public bool Active { get; set; } = true;
+	public bool Controlled { get; set; } = false;
 
 	public Vector3 UpDir { get; set; } = Vector3.Up;
 	public Vector3 CameraDir { get; set; } = Vector3.Forward;
@@ -27,30 +27,21 @@ public partial class Player : RigidBody3D
 	public override void _Ready()
 	{
 		debugLabel = GetNode<Label>("%DebugLabel");
-		Input.MouseMode = Input.MouseModeEnum.Captured;
+        ControlManager.AskForControl(this);
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {
-		if (!Active) return;
-		if (
-			@event is InputEventMouseMotion mouseMotion
-			&& Input.MouseMode == Input.MouseModeEnum.Captured
-		) {
+		if (!Controlled) return;
+		if (@event is InputEventMouseMotion mouseMotion
+            && MouseManager.Captured)
+        {
 			onMouseLookAround(mouseMotion.ScreenRelative);
 			GetViewport().SetInputAsHandled();
 		}
 	}
 
 	public override void _Input(InputEvent @event) {
-		if (@event.IsActionPressed("ui_cancel")) {
-			Input.MouseMode = Input.MouseModeEnum.Visible;
-			GetViewport().SetInputAsHandled();
-		}
-		if (@event is InputEventMouseButton mouseClick && mouseClick.ButtonIndex == MouseButton.Left) {
-			Input.MouseMode = Input.MouseModeEnum.Captured;
-			GetViewport().SetInputAsHandled();
-		}
-		if (!Active) return;
+		if (!Controlled) return;
 		if (@event.IsActionPressed("interact")) {
 			interact();
 			GetViewport().SetInputAsHandled();
@@ -65,7 +56,7 @@ public partial class Player : RigidBody3D
 	}
 
 	public override void _PhysicsProcess(double delta) {
-		if (Active) onMoveAround(moveInput());
+		if (Controlled) onMoveAround(moveInput());
 		springUp();
 		springToCameraTarget();
 	}
@@ -126,4 +117,6 @@ public partial class Player : RigidBody3D
 
 	public void AddInteractable(InteractableArea i) => interactables.Add(i);
 	public void RemoveInteractable(InteractableArea i) => interactables.Remove(i);
+    public void OnGotControl() => Controlled = true;
+    public void OnGiveUpControl() => Controlled = false;
 }

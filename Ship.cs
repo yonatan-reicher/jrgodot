@@ -1,6 +1,7 @@
 using Godot;
+using System;
 
-public partial class Ship : RigidBody3D
+public partial class Ship : RigidBody3D, Controllable
 {
 	[ExportGroup("Sit")]
 	[Export] Node3D sit;
@@ -9,8 +10,8 @@ public partial class Ship : RigidBody3D
 	[Export] FlightStick flightStick;
 	[Export(PropertyHint.Range, "0,2")] float flightStickMouseSensitivity = 1f;
 	[Export(PropertyHint.Range, "0,2")] float flightStickRollStrength = 1f;
-	[Export(PropertyHint.Range, "0,2000")] float pitchAndYawStrength = 1000f;
-	[Export(PropertyHint.Range, "0,200")] float rollStrength = 100f;
+	[Export(PropertyHint.Range, "0,5000,or_greater,or_less")] float pitchAndYawStrength = 3000f;
+	[Export(PropertyHint.Range, "0,2000,or_greater,or_less")] float rollStrength = 700f;
 	[ExportGroup("Acceleration Stick")]
 	[Export] AccelerationStick accelerationStick;
 	[ExportGroup("Ramp")]
@@ -23,7 +24,7 @@ public partial class Ship : RigidBody3D
 	bool thrustingVtol = false;
 
 	bool _active;
-	public bool Active {
+	public bool Controlled {
 		get => _active;
 		set {
 			_active = value;
@@ -40,7 +41,7 @@ public partial class Ship : RigidBody3D
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {
-		if (!Active) return;
+		if (!Controlled) return;
 		if (@event is InputEventMouseMotion mouseMotion
 			&& Input.MouseMode == Input.MouseModeEnum.Captured) {
 			Vector2 move = mouseMotion.ScreenRelative
@@ -51,7 +52,7 @@ public partial class Ship : RigidBody3D
 	}
 
 	public override void _Process(double delta) {
-		if (!Active) return;
+		if (!Controlled) return;
 
 		float d = flightStickRollStrength * (float)delta;
 		if (Input.IsActionPressed("roll_left")) flightStick.Roll -= d;
@@ -66,7 +67,7 @@ public partial class Ship : RigidBody3D
 	}
 
 	public override void _PhysicsProcess(double delta) {
-		if (Active) {
+		if (Controlled) {
 			// Move the pilot towards their sit
 			// PhysicsServer3D.BodySetState(
 			// 	pilot.GetRid(),
@@ -110,19 +111,13 @@ public partial class Ship : RigidBody3D
 	}
 
 	void Interact(Node3D interactor) {
-		if (!Active) {
-			Active = true;
-			if (interactor is Player p) {
-				p.Active = false;
-				pilot = p;
-			} else {
-				pilot = null;
-			}
-		} else {
-			Active = false;
-			if (pilot is not null) {
-				pilot.Active = true;
-			}
+		if (Controlled) {
+			throw new Exception("The ship was interacted with while it was controlled!");
 		}
+		ControlManager.AskForControl(this);
+		pilot = interactor as Player;
 	}
+
+	public void OnGotControl() => Controlled = true;
+	public void OnGiveUpControl() => Controlled = false;
 }
