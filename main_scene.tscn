@@ -44,7 +44,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="Player" parent="." unique_id=160095304 instance=ExtResource("1_gyfs4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4722874, 0.331836, -4.14573)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0638313, 0.331836, -0.69068885)
 
 [node name="Ship" parent="." unique_id=1660485224 instance=ExtResource("2_2c62f")]
 transform = Transform3D(0.8365996, 0, -0.54781485, 0, 1, 0, 0.54781485, 0, 0.8365996, 3.0285726, 0, -3.3760376)
