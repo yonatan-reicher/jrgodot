@@ -27,14 +27,14 @@ public partial class Player : RigidBody3D, Controllable
 	public override void _Ready()
 	{
 		debugLabel = GetNode<Label>("%DebugLabel");
-        ControlManager.AskForControl(this);
+		ControlManager.AskForControl(this);
 	}
 
 	public override void _UnhandledInput(InputEvent @event) {
 		if (!Controlled) return;
 		if (@event is InputEventMouseMotion mouseMotion
-            && MouseManager.Captured)
-        {
+			&& MouseManager.Captured)
+		{
 			onMouseLookAround(mouseMotion.ScreenRelative);
 			GetViewport().SetInputAsHandled();
 		}
