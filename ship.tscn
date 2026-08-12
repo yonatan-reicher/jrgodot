@@ -114,6 +114,7 @@ motor/max_impulse = 1001.99
 
 [node name="Ramp" type="RigidBody3D" parent="." unique_id=70242732]
 transform = Transform3D(1, 0, 0, 0, 0.99279994, -0.11978448, 0, 0.11978448, 0.99279994, 0.022122443, 0.13312948, 2.013337)
+mass = 50.0
 
 [node name="Collision" type="CollisionShape3D" parent="Ramp" unique_id=1614163719]
 transform = Transform3D(1, 0, 0, 0, 1.0000002, -1.4901161e-08, 0, 1.4901161e-08, 1.0000002, 0, 0, 0)

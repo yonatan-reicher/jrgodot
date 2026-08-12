@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ckudr8chj1kgo"]
 
-[ext_resource type="Script" uid="uid://bkhh17u3mnb5t" path="res://Player.cs" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://chb7f61ht4s87" path="res://Player.cs" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://d2i4nouv544ii" path="res://StandUp.cs" id="2_onrkg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_onrkg"]
-friction = 0.05
-rough = true
+friction = 0.39
 bounce = 0.1
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3k1vp"]
@@ -17,15 +17,25 @@ height = 1.0065918
 radius = 0.2319336
 height = 1.0
 
-[node name="Player" type="RigidBody3D" unique_id=1031226533 node_paths=PackedStringArray("camera")]
+[node name="Player" type="RigidBody3D" unique_id=1031226533 node_paths=PackedStringArray("camera", "standUp")]
 mass = 65.0
 physics_material_override = SubResource("PhysicsMaterial_onrkg")
 angular_damp = 10.0
 script = ExtResource("1_onrkg")
 camera = NodePath("Camera3D")
 mouseSensitivity = 0.002
-movementSpeed = 300.0
-standUpSpringStrength = 2500.0
+movementSpeed = 500.0
+lookAtSpringStrength = 10.0
+standUp = NodePath("StandUp")
+
+[node name="StandUp" type="Node" parent="." unique_id=2059592938]
+script = ExtResource("2_onrkg")
+targetAngularVelocityClose = 0.0
+targetAngularVelocityFar = 62.8
+targetAngularVelocityEasing = 0.2588162
+angularAccelerationClose = 100.0
+angularAccelerationFar = 1000.0
+angularAccelerationEasing = 0.8408964
 
 [node name="Graphics" type="MeshInstance3D" parent="." unique_id=1916816855]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5032959, 0)
